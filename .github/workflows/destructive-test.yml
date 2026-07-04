@@ -1,0 +1,22 @@
+name: Destructive Test CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  intentional-failure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Simulate passing step
+        run: echo "✅ Step 1 passed"
+
+      - name: Simulate failing step (DO NOT MERGE TO PROD)
+        run: |
+          echo "❌ Simulating a critical lint/test failure..."
+          exit 1
